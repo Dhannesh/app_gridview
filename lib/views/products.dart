@@ -9,13 +9,11 @@ class ProductsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2,
-      crossAxisSpacing: 10,
-      mainAxisSpacing: 10,
-      childAspectRatio: 0.5,
-        // mainAxisExtent: 300,
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+      maxCrossAxisExtent: 150,
+        mainAxisExtent: 250
       ),
+      physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.all(5.0),
       children: List.generate(
         products.length,
