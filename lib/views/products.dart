@@ -1,81 +1,116 @@
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-final randomColor = Random();
+class Item {
+  final String imageName;
+  Item({required this.imageName});
+}
 
-class ProductsView extends StatelessWidget {
+class GridItem extends StatefulWidget {
+  final Item item;
+  final ValueChanged<bool> gridItemSelectedStateChanged;
+  const GridItem(
+      {super.key,
+      required this.item,
+      required this.gridItemSelectedStateChanged});
+
+  @override
+  _GridItemState createState() => _GridItemState();
+}
+
+class _GridItemState extends State<GridItem> {
+  bool isSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+        onTap: () {
+          setState(() {
+            isSelected = !isSelected;
+            widget.gridItemSelectedStateChanged(isSelected);
+          });
+        },
+        child: Stack(children: <Widget>[
+          Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: SizedBox(
+                height: 175,
+                width: 175,
+                child: Image.asset(widget.item.imageName,
+                    fit: BoxFit.cover,
+                    color: Colors.black.withOpacity(isSelected ? 0.9 : 0),
+                    colorBlendMode: BlendMode.color),
+              )),
+          isSelected
+              ? const Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.check_circle,
+                      color: Colors.blue,
+                    ),
+                  ),
+                )
+              : Container()
+        ]));
+  }
+}
+
+class ProductsView extends StatefulWidget {
   const ProductsView({super.key});
+
+  @override
+  State<ProductsView> createState() => _ProductsViewState();
+}
+
+class _ProductsViewState extends State<ProductsView> {
+  late List<Item> itemList;
+  late List<Item> selectedList;
+  @override
+  void initState() {
+    super.initState();
+    loadList();
+  }
+
+  void loadList() {
+    itemList = [];
+    selectedList = [];
+
+    itemList.add(Item(imageName: 'images/heels.jpg'));
+    itemList.add(Item(imageName: 'images/heels1.jpg'));
+    itemList.add(Item(imageName: 'images/heels2.jpg'));
+    itemList.add(Item(imageName: 'images/heels3.jpg'));
+    itemList.add(Item(imageName: 'images/heels4.jpg'));
+    itemList.add(Item(imageName: 'images/heels5.jpg'));
+    itemList.add(Item(imageName: 'images/heels6.jpg'));
+    itemList.add(Item(imageName: 'images/heels7.jpg'));
+    itemList.add(Item(imageName: 'images/heels8.jpg'));
+    itemList.add(Item(imageName: 'images/heels9.jpg'));
+  }
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      // itemCount: 20,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10
-      ),
-      physics: BouncingScrollPhysics(),
-      itemBuilder: (_, index){
-        return Container(
-          alignment: Alignment.center,
-          child: GridItem(product: products[index%9],index: index,),
-        );
-      }
-    );
-  }
-}
-
-class Product {
-  final String image;
-  final String title;
-  Product({required this.image, required this.title});
-}
-
-List<Product> products = [
-  Product(image: 'images/heels.jpg', title: 'High heels'),
-  Product(image: 'images/heels2.jpg', title: 'Party heels'),
-  Product(image: 'images/heels3.jpg', title: 'Stylish heels'),
-  Product(image: 'images/heels4.jpg', title: 'Red heels'),
-  Product(image: 'images/heels5.jpg', title: 'Black heels'),
-  Product(image: 'images/heels6.jpg', title: 'Trendy heels'),
-  Product(image: 'images/heels7.jpg', title: 'Fashionable heels'),
-  Product(image: 'images/heels8.jpg', title: 'White heels'),
-  Product(image: 'images/heels9.jpg', title: 'Laced heels'),
-];
-
-class GridItem extends StatelessWidget {
-  final Product product;
-  final int index;
-  const GridItem({super.key, required this.product, required this.index});
-
-  Color getRandomColor (){
-    Random random = Random();
-    return Color.fromARGB(random.nextInt(255), random.nextInt(255), random.nextInt(255), random.nextInt(255));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: getRandomColor(),
-      elevation: 5,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: Theme.of(context).colorScheme.outline,
+        itemCount: itemList.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
         ),
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image(image: AssetImage(product.image), width: 125, height: 125, fit: BoxFit.fill),
-          Text("${product.title} \n No: ${index+1}" , style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-          )
-        ]
-      ),
-    );
+        itemBuilder: (context, index) => GridItem(
+            item: itemList[index],
+            gridItemSelectedStateChanged: (bool value) {
+              setState(() {
+                if (value) {
+                  selectedList.add(itemList[index]);
+                } else {
+                  selectedList.remove(itemList[index]);
+                }
+              });
+              var numOfItems = selectedList.length;
+              debugPrint("Selected $numOfItems items");
+            }));
   }
 }
-
