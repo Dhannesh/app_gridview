@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class ProductsView extends StatelessWidget {
@@ -7,81 +9,56 @@ class ProductsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 2,
-      children: <Widget>[
-        Container(
-          color: Colors.yellowAccent[100],
-            alignment: Alignment.center,
-          child: const Text("Breakfast and Diary",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold
-          ),)
-    ),
-        Container(
-            color: Colors.yellowAccent[200],
-            alignment: Alignment.center,
-            child: const Text("Fresh Vegetables",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold
-              ),)
-        ),
-        Container(
-            color: Colors.redAccent[100],
-            alignment: Alignment.center,
-            child: const Text("Fresh Fruits",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold
-              ),)
-        ),
-        Container(
-            color: Colors.redAccent[200],
-            alignment: Alignment.center,
-            child: const Text("Snacks",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold
-              ),)
-        ),
-        Container(
-            color: Colors.blueAccent[100],
-            alignment: Alignment.center,
-            child: const Text("Beverages",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold
-              ),)
-        ),
-        Container(
-            color: Colors.blueAccent[200],
-            alignment: Alignment.center,
-            child: const Text("Desserts",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold
-              ),)
-        ),
-        Container(
-            color: Colors.orangeAccent[100],
-            alignment: Alignment.center,
-            child: const Text("Instant Foods",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold
-              ),)
-        ),
-        Container(
-            color: Colors.orangeAccent[200],
-            alignment: Alignment.center,
-            child: const Text("Home Care",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold
-              ),)
-        ),
-
-      ],
+      padding: const EdgeInsets.all(15.0),
+      children: List.generate(products.length, (index) => GridItem(product: products[index])),
     );
+  }
+}
+
+class Product {
+  final String title;
+  final String subtitle;
+  Product({required this.title, required this.subtitle});
+}
+
+List<Product> products = [
+  Product(title: 'Apples', subtitle: 'Fresh Fruits'),
+  Product(title: 'Bananas', subtitle: ' Fresh Fruits'),
+  Product(title: 'Noodles', subtitle: 'Instant Fruits'),
+  Product(title: 'Ice Cream', subtitle: 'Desserts'),
+  Product(title: 'Soap', subtitle: 'Personal Care'),
+  Product(title: 'Dog Food', subtitle: 'Pet Care'),
+  Product(title: 'Shampoo', subtitle: 'Personal Care'),
+  Product(title: 'Candy', subtitle: 'Desserts'),
+  Product(title: 'Popcorn', subtitle: 'Instant Foods'),
+  Product(title: 'Fruit Juice', subtitle: 'Beverages'),
+];
+
+class GridItem extends StatelessWidget {
+  final Product product;
+  const GridItem({super.key, required this.product});
+  Color getRandomColor() {
+    Random random = Random();
+    return Color.fromARGB(random.nextInt(255), random.nextInt(255),
+        random.nextInt(255), random.nextInt(255));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        color: getRandomColor(),
+        child: Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+              Text(product.title,
+                  style: const TextStyle(
+                    fontSize: 20,
+                  )),
+              Text(product.subtitle,
+                  style: const TextStyle(
+                    fontSize: 15,
+                  ))
+            ])));
   }
 }
