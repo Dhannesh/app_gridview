@@ -8,13 +8,20 @@ class ProductsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
+    return GridView(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 2,
-      padding: const EdgeInsets.all(15.0),
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+      childAspectRatio: 0.5,
+        // mainAxisExtent: 300,
+      ),
+      padding: const EdgeInsets.all(5.0),
       children: List.generate(
         products.length,
         (index) => GridItem(product: products[index]),
       ),
+
     );
   }
 }
