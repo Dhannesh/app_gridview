@@ -17,6 +17,7 @@ class ProductsView extends StatelessWidget {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10
       ),
+      physics: BouncingScrollPhysics(),
       itemBuilder: (_, index){
         return Container(
           alignment: Alignment.center,
