@@ -10,6 +10,9 @@ class ProductsView extends StatelessWidget {
     return GridView.count(
       crossAxisCount: 2,
       padding: const EdgeInsets.all(15.0),
+      crossAxisSpacing: 15,
+      mainAxisSpacing: 15,
+      scrollDirection: Axis.horizontal,
       children: List.generate(products.length, (index) => GridItem(product: products[index])),
     );
   }
