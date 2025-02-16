@@ -11,11 +11,11 @@ class ProductsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      itemCount: 20,
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-      maxCrossAxisExtent: 200,
-        crossAxisSpacing: 15,
-        mainAxisSpacing: 15,
+      // itemCount: 20,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10
       ),
       itemBuilder: (_, index){
         return Container(
