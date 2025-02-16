@@ -17,16 +17,16 @@ class ProductsView extends StatelessWidget {
 }
 
 final List<Image> images = [
-  const Image(image: AssetImage('images/heels.jpg')),
-  const Image(image: AssetImage('images/heels1.jpg')),
-  const Image(image: AssetImage('images/heels2.jpg')),
-  const Image(image: AssetImage('images/heels3.jpg')),
-  const Image(image: AssetImage('images/heels4.jpg')),
-  const Image(image: AssetImage('images/heels5.jpg')),
-  const Image(image: AssetImage('images/heels6.jpg')),
-  const Image(image: AssetImage('images/heels7.jpg')),
-  const Image(image: AssetImage('images/heels8.jpg')),
-  const Image(image: AssetImage('images/heels9.jpg')),
+  const Image(image: AssetImage('images/heels.jpg'),fit: BoxFit.cover),
+  const Image(image: AssetImage('images/heels1.jpg'),fit: BoxFit.cover),
+  const Image(image: AssetImage('images/heels2.jpg'),fit: BoxFit.cover),
+  const Image(image: AssetImage('images/heels3.jpg'),fit: BoxFit.cover),
+  const Image(image: AssetImage('images/heels4.jpg'),fit: BoxFit.cover),
+  const Image(image: AssetImage('images/heels5.jpg'),fit: BoxFit.cover),
+  const Image(image: AssetImage('images/heels6.jpg'),fit: BoxFit.cover),
+  const Image(image: AssetImage('images/heels7.jpg'),fit: BoxFit.cover),
+  const Image(image: AssetImage('images/heels8.jpg'),fit: BoxFit.cover),
+  const Image(image: AssetImage('images/heels9.jpg'),fit: BoxFit.cover),
 
 ];
 
