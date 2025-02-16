@@ -3,23 +3,26 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+final randomColor = Random();
+
 class ProductsView extends StatelessWidget {
   const ProductsView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GridView(
+    return GridView.builder(
+      itemCount: 20,
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-      maxCrossAxisExtent: 150,
-        mainAxisExtent: 250
+      maxCrossAxisExtent: 200,
+        crossAxisSpacing: 15,
+        mainAxisSpacing: 15,
       ),
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.all(5.0),
-      children: List.generate(
-        products.length,
-        (index) => GridItem(product: products[index]),
-      ),
-
+      itemBuilder: (_, index){
+        return Container(
+          alignment: Alignment.center,
+          child: GridItem(product: products[index%9],index: index,),
+        );
+      }
     );
   }
 }
@@ -44,7 +47,8 @@ List<Product> products = [
 
 class GridItem extends StatelessWidget {
   final Product product;
-  const GridItem({super.key, required this.product});
+  final int index;
+  const GridItem({super.key, required this.product, required this.index});
 
   Color getRandomColor (){
     Random random = Random();
@@ -66,7 +70,8 @@ class GridItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image(image: AssetImage(product.image), width: 125, height: 125, fit: BoxFit.fill),
-          Text(product.title, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),)
+          Text("${product.title} \n No: ${index+1}" , style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          )
         ]
       ),
     );
